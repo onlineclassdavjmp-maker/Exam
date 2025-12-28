@@ -1,33 +1,33 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html>
 <head>
-    <title>Computer Basics Quiz - Class 5</title>
+    <title>Python Quiz - Class 12</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
+            font-family: Arial;
+            background-color: #f2f2f2;
             padding: 20px;
         }
         .quiz-box {
             background: white;
             padding: 20px;
-            max-width: 500px;
+            width: 500px;
             margin: auto;
             border-radius: 10px;
-            box-shadow: 0 0 10px gray;
         }
         h2 {
-            color: #2c3e50;
+            text-align: center;
         }
         button {
-            padding: 10px 15px;
-            margin: 10px 5px;
-            font-size: 14px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
             cursor: pointer;
+            margin-top: 10px;
         }
-        .score {
-            font-size: 18px;
-            color: green;
+        button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
@@ -35,101 +35,55 @@
 <body>
 
 <div class="quiz-box">
-    <h2 id="question"></h2>
-    <div id="options"></div>
+    <h2>Python Quiz - Class 12</h2>
 
-    <button onclick="prevQuestion()">Back</button>
-    <button onclick="nextQuestion()">Next</button>
+    <form id="quizForm">
 
-    <p class="score" id="score"></p>
+        <p>1. Which keyword is used to define a function in Python?</p>
+        <input type="radio" name="q1" value="a"> func<br>
+        <input type="radio" name="q1" value="b"> def<br>
+        <input type="radio" name="q1" value="c"> function<br>
+
+        <p>2. Which data type is immutable?</p>
+        <input type="radio" name="q2" value="a"> List<br>
+        <input type="radio" name="q2" value="b"> Dictionary<br>
+        <input type="radio" name="q2" value="c"> Tuple<br>
+
+        <p>3. What is the output of: print(2 ** 3)?</p>
+        <input type="radio" name="q3" value="a"> 6<br>
+        <input type="radio" name="q3" value="b"> 8<br>
+        <input type="radio" name="q3" value="c"> 9<br>
+
+        <p>4. Which module is used for database connectivity in Python?</p>
+        <input type="radio" name="q4" value="a"> mysql<br>
+        <input type="radio" name="q4" value="b"> sqlite3<br>
+        <input type="radio" name="q4" value="c"> dbconnect<br>
+
+        <br>
+        <button type="button" onclick="checkAnswers()">Submit</button>
+    </form>
+
+    <h3 id="result"></h3>
 </div>
 
 <script>
-    const quiz = [
-        {
-            question: "1. What is a computer?",
-            options: ["A machine", "A book", "A toy", "A pencil"],
-            answer: 0
-        },
-        {
-            question: "2. Which part is called the brain of the computer?",
-            options: ["Monitor", "CPU", "Keyboard", "Mouse"],
-            answer: 1
-        },
-        {
-            question: "3. Which device is used to type?",
-            options: ["Mouse", "Monitor", "Keyboard", "Speaker"],
-            answer: 2
-        },
-        {
-            question: "4. Which one is an output device?",
-            options: ["Keyboard", "Mouse", "CPU", "Monitor"],
-            answer: 3
-        },
-        {
-            question: "5. Which computer can fit in your pocket?",
-            options: ["Desktop", "Laptop", "Tablet", "Supercomputer"],
-            answer: 2
-        }
-    ];
-
-    let currentQuestion = 0;
-    let userAnswers = new Array(quiz.length).fill(null);
-
-    function loadQuestion() {
-        document.getElementById("question").innerText = quiz[currentQuestion].question;
-        const optionsDiv = document.getElementById("options");
-        optionsDiv.innerHTML = "";
-
-        quiz[currentQuestion].options.forEach((option, index) => {
-            const radio = document.createElement("input");
-            radio.type = "radio";
-            radio.name = "option";
-            radio.value = index;
-            radio.checked = userAnswers[currentQuestion] === index;
-
-            radio.onclick = () => userAnswers[currentQuestion] = index;
-
-            optionsDiv.appendChild(radio);
-            optionsDiv.appendChild(document.createTextNode(option));
-            optionsDiv.appendChild(document.createElement("br"));
-        });
-
-        document.getElementById("score").innerText = "";
-    }
-
-    function nextQuestion() {
-        if (currentQuestion < quiz.length - 1) {
-            currentQuestion++;
-            loadQuestion();
-        } else {
-            showScore();
-        }
-    }
-
-    function prevQuestion() {
-        if (currentQuestion > 0) {
-            currentQuestion--;
-            loadQuestion();
-        }
-    }
-
-    function showScore() {
+    function checkAnswers() {
         let score = 0;
-        quiz.forEach((q, i) => {
-            if (userAnswers[i] === q.answer) {
-                score++;
-            }
-        });
-        document.getElementById("question").innerText = "Quiz Finished!";
-        document.getElementById("options").innerHTML = "";
-        document.getElementById("score").innerText =
-            "Your Score: " + score + " / " + quiz.length;
-    }
 
-    loadQuestion();
+        let q1 = document.querySelector('input[name="q1"]:checked');
+        let q2 = document.querySelector('input[name="q2"]:checked');
+        let q3 = document.querySelector('input[name="q3"]:checked');
+        let q4 = document.querySelector('input[name="q4"]:checked');
+
+        if (q1 && q1.value === "b") score++;
+        if (q2 && q2.value === "c") score++;
+        if (q3 && q3.value === "b") score++;
+        if (q4 && q4.value === "b") score++;
+
+        document.getElementById("result").innerHTML =
+            "Your Score: " + score + " / 4";
+    }
 </script>
 
 </body>
 </html>
-
