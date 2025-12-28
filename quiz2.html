@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Computer Basics Quiz - Class 5</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            padding: 20px;
+        }
+        .quiz-box {
+            background: white;
+            padding: 20px;
+            max-width: 500px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+        h2 {
+            color: #2c3e50;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 10px 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .score {
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+    <h2 id="question"></h2>
+    <div id="options"></div>
+
+    <button onclick="prevQuestion()">Back</button>
+    <button onclick="nextQuestion()">Next</button>
+
+    <p class="score" id="score"></p>
+</div>
+
+<script>
+    const quiz = [
+        {
+            question: "1. What is a computer?",
+            options: ["A machine", "A book", "A toy", "A pencil"],
+            answer: 0
+        },
+        {
+            question: "2. Which part is called the brain of the computer?",
+            options: ["Monitor", "CPU", "Keyboard", "Mouse"],
+            answer: 1
+        },
+        {
+            question: "3. Which device is used to type?",
+            options: ["Mouse", "Monitor", "Keyboard", "Speaker"],
+            answer: 2
+        },
+        {
+            question: "4. Which one is an output device?",
+            options: ["Keyboard", "Mouse", "CPU", "Monitor"],
+            answer: 3
+        },
+        {
+            question: "5. Which computer can fit in your pocket?",
+            options: ["Desktop", "Laptop", "Tablet", "Supercomputer"],
+            answer: 2
+        }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = new Array(quiz.length).fill(null);
+
+    function loadQuestion() {
+        document.getElementById("question").innerText = quiz[currentQuestion].question;
+        const optionsDiv = document.getElementById("options");
+        optionsDiv.innerHTML = "";
+
+        quiz[currentQuestion].options.forEach((option, index) => {
+            const radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = "option";
+            radio.value = index;
+            radio.checked = userAnswers[currentQuestion] === index;
+
+            radio.onclick = () => userAnswers[currentQuestion] = index;
+
+            optionsDiv.appendChild(radio);
+            optionsDiv.appendChild(document.createTextNode(option));
+            optionsDiv.appendChild(document.createElement("br"));
+        });
+
+        document.getElementById("score").innerText = "";
+    }
+
+    function nextQuestion() {
+        if (currentQuestion < quiz.length - 1) {
+            currentQuestion++;
+            loadQuestion();
+        } else {
+            showScore();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentQuestion > 0) {
+            currentQuestion--;
+            loadQuestion();
+        }
+    }
+
+    function showScore() {
+        let score = 0;
+        quiz.forEach((q, i) => {
+            if (userAnswers[i] === q.answer) {
+                score++;
+            }
+        });
+        document.getElementById("question").innerText = "Quiz Finished!";
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("score").innerText =
+            "Your Score: " + score + " / " + quiz.length;
+    }
+
+    loadQuestion();
+</script>
+
+</body>
+</html>
+
